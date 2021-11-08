@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>MyProjectSpring</artifactId>
+    <artifactId>MySpringProject</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>MyProjectSpring</name>
-    <description>MyProjectSpring</description>
+    <name>MySpringProject</name>
+    <description>MySpringProject</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -56,13 +56,22 @@
             <artifactId>hibernate-core</artifactId>
             <version>5.4.32.Final</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <artifactId>spring-boot-starter-maven</artifactId>
                 <configuration>
                     <excludes>
                         <exclude>

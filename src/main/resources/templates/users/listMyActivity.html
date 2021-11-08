@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">    <title>Title</title>
+</head>
+<body style="background: #b5b9b4">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">ActiUser</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" th:href="'/user/main/'+${user.getId()}" th:text="${locale.getLocale().getString('getHome')}"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="'/user/listOfActivity/'+${user.getId()}" th:text="${locale.getLocale().getString('getList')}"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="'/user/myActivities/'+${user.getId()}" th:text="${locale.getLocale().getString('acti')}"></a>
+                </li>
+            </ul>
+            <form class="d-flex">
+                <button class="btn btn-primary btn-lg disabled" th:text="${user.getLogin()}"></button>
+                <button class="btn btn-outline-primary btn-lg" type="submit"><a href="/" th:text="${locale.getLocale().getString('signOut')}"></a></button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col" th:text="${locale.getLocale().getString('name')}"></th>
+        <th scope="col" th:text="${locale.getLocale().getString('category')}"></th>
+        <th scope="col" th:text="${locale.getLocale().getString('addNewActivity')}"></th>
+        <th scope="col" th:text="${locale.getLocale().getString('delete')}"></th>
+        <th scope="col" th:text="${locale.getLocale().getString('edit')}"></th>
+    </tr>
+    </thead>
+    <tbody th:each="activity : ${activities}">
+    <tr>
+        <td th:text="${activity.getName()}"></td>
+        <td th:text="${activity.getCategory()}"></td>
+        <div th:each="anhours : ${hours}">
+            <div th:if="${anhours.getActivityId() == activity.getId()}">
+                <td th:text="${anhours.getHours()}"></td>
+            </div>
+        </div>
+        <td><button class="btn btn-outline-secondary"><a th:href="'/user/myActivities/' + ${user.getId()} + '/delete/' + ${activity.getId()}" th:text="${locale.getLocale().getString('delete')}"></a></button></td>
+        <td><button class="btn btn-outline-success"><a th:href="'/user/myActivities/' + ${user.getId()} + '/editAnActivity/' + ${activity.getId()}" th:text="${locale.getLocale().getString('edit')}"></a></button></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+
+</body>
+</html>
