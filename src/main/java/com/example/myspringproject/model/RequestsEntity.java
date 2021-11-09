@@ -28,6 +28,10 @@ public class RequestsEntity {
     @Enumerated(EnumType.STRING)
     private Type type;
 
+    private String login;
+    private String activityName;
+
+
     public RequestsEntity(Long userId, Long activityId, Type type) {
         this.userId = userId;
         this.activityId = activityId;

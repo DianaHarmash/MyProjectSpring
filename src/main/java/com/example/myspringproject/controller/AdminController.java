@@ -33,87 +33,44 @@ public class AdminController {
         return "admins/adminMain";
     }
 
-    @GetMapping("/admin/listOfActivity/{id}/next")
-    public String listOfActivityPage(@PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("activities", activityPageService.getActivityPaging("next","id"));
+    @GetMapping("/admin/listOfActivity/{id}")
+    public String listOfActivityPage(@PathVariable(value = "id") Long id, @RequestParam(defaultValue = "") String dir, Model model) {
+        model.addAttribute("activities", activityPageService.getActivityPaging(dir,"id"));
         model.addAttribute("locale", configuration.getLocale());
         model.addAttribute("user", userService.findUserById(id));
         return "admins/listOfActivities";
     }
 
-    @GetMapping("admin/listOfActivity/{id}/sortByName/next")
-    public String listOfActivityPageSortByName(@PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("activities", activityPageService.getActivityPaging("next","name"));
+    @GetMapping("admin/listOfActivity/{id}/sortByName")
+    public String listOfActivityPageSortByName(@PathVariable(value = "id") Long id, @RequestParam(defaultValue = "") String dir, Model model) {
+        model.addAttribute("activities", activityPageService.getActivityPaging(dir,"name"));
         model.addAttribute("locale", configuration.getLocale());
         model.addAttribute("user", userService.findUserById(id));
-        return "admins/listOfActivities";
+        return "admins/listOfActivitiesByName";
     }
 
-    @GetMapping("admin/listOfActivity/{id}/sortByCategory/next")
-    public String listOfActivityPageSortByCategory(@PathVariable(value = "id") Long id, Model model) {
+    @GetMapping("admin/listOfActivity/{id}/sortByCategory")
+    public String listOfActivityPageSortByCategory(@PathVariable(value = "id") Long id, @RequestParam(defaultValue = "") String dir, Model model) {
         model.addAttribute("locale", configuration.getLocale());
         model.addAttribute("user", userService.findUserById(id));
-        model.addAttribute("activities", activityPageService.getActivityPaging("next","category"));
-        return "admins/listOfActivities";
+        model.addAttribute("activities", activityPageService.getActivityPaging(dir,"category"));
+        return "admins/listOfActivitiesByCategory";
     }
 
-    @GetMapping("admin/listOfActivity/{id}/sortByUsers/next")
-    public String listOfActivityPageSortByUsers(@PathVariable(value = "id") Long id, Model model) {
+    @GetMapping("admin/listOfActivity/{id}/sortByUsers")
+    public String listOfActivityPageSortByUsers(@PathVariable(value = "id") Long id, @RequestParam(defaultValue = "") String dir, Model model) {
         model.addAttribute("locale", configuration.getLocale());
         model.addAttribute("user", userService.findUserById(id));
-        model.addAttribute("activities", activityPageService.getActivityPaging("next","users"));
-        return "admins/listOfActivities";
+        model.addAttribute("activities", activityPageService.getActivityPaging(dir,"users"));
+        return "admins/listOfActivitiesByUsers";
     }
 
-    @GetMapping("/admin/listOfActivity/{id}/prev")
-    public String listOfActivityPagePrev(HttpServletRequest request, @PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("activities", activityPageService.getActivityPaging("prev","id"));
-        model.addAttribute("locale", configuration.getLocale());
-        model.addAttribute("user", userService.findUserById(id));
-        return "admins/listOfActivities";
-    }
-
-    @GetMapping("admin/listOfActivity/{id}/sortByName/prev")
-    public String listOfActivityPageSortByNamePrev(@PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("activities", activityPageService.getActivityPaging("prev","name"));
-        model.addAttribute("locale", configuration.getLocale());
-        model.addAttribute("user", userService.findUserById(id));
-        return "admins/listOfActivities";
-    }
-
-    @GetMapping("admin/listOfActivity/{id}/sortByCategory/prev")
-    public String listOfActivityPageSortByCategoryPrev(@PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("locale", configuration.getLocale());
-        model.addAttribute("user", userService.findUserById(id));
-        model.addAttribute("activities", activityPageService.getActivityPaging("prev","category"));
-        return "admins/listOfActivities";
-    }
-
-    @GetMapping("admin/listOfActivity/{id}/sortByUsers/prev")
-    public String listOfActivityPageSortByUsersPrev(@PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("locale", configuration.getLocale());
-        model.addAttribute("user", userService.findUserById(id));
-        model.addAttribute("activities", activityPageService.getActivityPaging("prev","users"));
-        return "admins/listOfActivities";
-    }
-
-    @GetMapping("/admin/userList/{id}")
-    public String userListPage(/*HttpServletResponse response,*/ @PathVariable(value = "id") Long id, Model model) {
-        model.addAttribute("locale", configuration.getLocale());
-        List<UserEntity> users = userPageService.getUsersPaging();
-        model.addAttribute("user", userService.findUserById(id));
-        model.addAttribute("users", users);
-        return "admins/userList";
-    }
 
     @GetMapping("/admin/listOfActivity/{id}/addAnActivity")
     public String listOfActivityAdd(/*HttpServletResponse response,*/ @PathVariable(name = "id") Long id, Model model) {
         model.addAttribute("locale", configuration.getLocale());
         model.addAttribute("user", userService.findUserById(id));
-        return "admins/addAnActivity й1ц2у3к4" +
-                "" +
-                "й1ц2у3к4" +
-                "";
+        return "admins/addAnActivity";
     }
 
     @PostMapping("/admin/listOfActivity/{id}/addAnActivity")

@@ -19,7 +19,7 @@
                     <a class="nav-link active" aria-current="page" th:href="'/admin/main/'+${user.getId()}" th:text="${locale.getLocale().getString('getHome')}"></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="'/admin/listOfActivity/'+${user.getId()}+'/next'" th:text="${locale.getLocale().getString('getList')}"></a>
+                    <a class="nav-link" th:href="'/admin/listOfActivity/'+${user.getId()}" th:text="${locale.getLocale().getString('getList')}"></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" th:href="'/admin/listOfRequest/'+${user.getId()}" th:text="${locale.getLocale().getString('listOfRequest')}"></a>

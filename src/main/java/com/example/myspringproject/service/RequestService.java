@@ -8,6 +8,7 @@ import com.example.myspringproject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.ResultSet;
 import java.util.*;
 
 import com.example.myspringproject.repository.UserActivityRepository;
@@ -83,10 +84,8 @@ public class RequestService {
         }
     }
 
-    public ArrayList<RequestsEntity> getAllRequests() {
-        ArrayList<RequestsEntity> requestsEntities = new ArrayList<>();
-        requestRepository.findAll().iterator().forEachRemaining(requestsEntities::add);
-        return requestsEntities;
+    public List<RequestsEntity> getAllRequests() {
+        return requestRepository.findAllJoin();
     }
 
     private RequestsEntity getRequest(Long requestId) {
