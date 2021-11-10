@@ -2,7 +2,7 @@ package com.example.myspringproject.controller;
 
 import com.example.myspringproject.config.Configuration;
 import com.example.myspringproject.model.*;
-import com.example.myspringproject.service.UserPageService;
+import com.example.myspringproject.config.Encoder;
 import com.example.myspringproject.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Optional;
+
 
 @Controller
 public class    MainController {
@@ -92,12 +93,17 @@ public class    MainController {
     @PostMapping("/logIn")
     public String getUserDataLogInPage(HttpServletResponse response, @RequestParam String username, @RequestParam String password, @RequestParam String password1, Model model) {
         if(password.equals(password1)) {
-            UserEntity user = userService.saveUser(username, password).get();
-            Cookie cookie = new Cookie("user-id", user.getId().toString());
-            cookie.setPath("/");
-            cookie.setMaxAge(86400);
-            response.addCookie(cookie);
-            return (userService.getNumberOfRows() == 1 ? "redirect:/admin/main/" + user.getId() : "redirect:/user/main/" + user.getId());
+            if (Encoder.checkInputLogin(username) && Encoder.checkInputPassword(password)) {
+                UserEntity user = userService.saveUser(username, password).get();
+                Cookie cookie = new Cookie("user-id", user.getId().toString());
+                cookie.setPath("/");
+                cookie.setMaxAge(86400);
+                response.addCookie(cookie);
+                return (userService.getNumberOfRows() == 1 ? "redirect:/admin/main/" + user.getId() : "redirect:/user/main/" + user.getId());
+            } else {
+                this.exception = "Illegal format. Try again";
+                return "redirect:/logIn";
+            }
         } else {
             logger.log(Level.WARNING, "The password are different " + password + " && " + password1);
             this.exception = "The passwords are different. Please, try again";

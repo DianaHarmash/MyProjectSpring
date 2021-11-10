@@ -4,7 +4,7 @@ import com.example.myspringproject.config.Configuration;
 import com.example.myspringproject.model.ActivityEntity;
 import com.example.myspringproject.model.Role;
 import com.example.myspringproject.model.Type;
-import com.example.myspringproject.repository.UserRepository;
+import com.example.myspringproject.config.Encoder;
 import com.example.myspringproject.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,8 +71,11 @@ public class UserController {
 
     @PostMapping("user/listOfActivity/{userId}/addAnActivity/{activityId}")
     public String getListOfActivityAddPage(@PathVariable(name = "userId") Long userId, @PathVariable(name = "activityId") Long activityId, @RequestParam String hours) {
+        if (Encoder.checkInputHours(hours)) {
         requestService.addRequest(userId, activityId, hours, Type.ADD);
         return "redirect:/user/listOfActivity/" + userId;
+        }
+        return "redirect:/user/listOfActivity/" + userId + "/addAnActivity/" + activityId;
     }
 
     @GetMapping("/user/myActivities/{id}")
@@ -95,8 +98,11 @@ public class UserController {
 
     @PostMapping("/user/myActivities/{userId}/editAnActivity/{activityId}")
     public String getMyActivitiesEditPage(@PathVariable(name = "userId") Long userId, @PathVariable(name = "activityId") Long activityId, @RequestParam String hours) {
-        requestService.addRequest(userId, activityId, hours, Type.EDIT);
-        return "redirect:/user/myActivities/" + userId;
+        if (Encoder.checkInputHours(hours)) {
+            requestService.addRequest(userId, activityId, hours, Type.EDIT);
+            return "redirect:/user/myActivities/" + userId;
+        }
+        return "redirect:/user/myActivities/" + userId + "/editAnActivity/" + activityId;
     }
 
     @GetMapping("/user/myActivities/{userId}/delete/{activityId}")
